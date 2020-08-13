@@ -1,6 +1,7 @@
 import {
     USERS_GET_SUCCESS,
     USER_DELETE_SUCCESS,
+    USER_CREATE_SUCCESS,
     USER_CHANGE_SUCCESS
 } from '../constants/actions';
 
@@ -15,6 +16,9 @@ export default (state = [], action) => {
             break;
         case USER_CHANGE_SUCCESS:
             result = userChangeSuccess(state, action);
+            break;
+        case USER_CREATE_SUCCESS:
+            result = userCreateSuccess(state, action);
             break;
         default:
             result = state;
@@ -41,4 +45,7 @@ function userChangeSuccess(state, { payload }) {
     const newUserList = state.concat();
     newUserList[indexOf] = payload;
     return newUserList;
+}
+function userCreateSuccess(state, { payload }) {
+    return state.concat(payload);
 }

@@ -7,6 +7,10 @@ import {
     USER_DELETE_SUCCESS,
     USER_DELETE_ERROR,
 
+    USER_CREATE_REQUEST,
+    USER_CREATE_SUCCESS,
+    USER_CREATE_ERROR,
+
     USER_CHANGE_REQUEST,
     USER_CHANGE_SUCCESS,
     USER_CHANGE_ERROR
@@ -24,11 +28,11 @@ export function getUsers() {
             dispatch({
                 type: USERS_GET_SUCCESS,
                 payload: result
-            })
+            });
         } catch {
             dispatch({
                 type: USERS_GET_ERROR
-            })
+            });
         }
 
     }
@@ -61,19 +65,35 @@ export function changeUser(userId, userName, userRoles) {
         });
 
         try {
-            await restService.changeUser(userId, userName, userRoles);
+            const result = await restService.changeUser(userId, userName, userRoles);
             dispatch({
                 type: USER_CHANGE_SUCCESS,
-                payload: {
-                    userId,
-                    userName,
-                    userRoles
-                }
-            })
+                payload: result
+            });
         } catch {
             dispatch({
                 type: USER_CHANGE_ERROR
-            })
+            });
+        }
+    }
+}
+
+export function createUser(userName, userRoles) {
+    return async (dispatch) => {
+        dispatch({
+            type: USER_CREATE_REQUEST
+        });
+
+        try {
+            const result = await restService.createUser(userName, userRoles);
+            dispatch({
+                type: USER_CREATE_SUCCESS,
+                payload: result
+            });
+        } catch {
+            dispatch({
+                type: USER_CREATE_ERROR
+            });
         }
     }
 }

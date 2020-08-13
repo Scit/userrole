@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getUsers, deleteUser, changeUser } from '../actions/userActions';
+import { getUsers, deleteUser, createUser, changeUser } from '../actions/userActions';
 import { getRoles } from '../actions/rolesActions';
 import {
     CHANGE_DIALOG,
@@ -13,12 +13,14 @@ import {
 import UserList from '../components/UserList';
 import ModalDialog from '../components/ModalDialog';
 import UserForm from '../components/UserForm';
+import Button from '../components/Button';
 import './style.css';
 
 const actions = {
     getUsers,
     deleteUser,
     changeUser,
+    createUser,
     getRoles
 };
 
@@ -44,6 +46,7 @@ class App extends React.Component {
         actions: PropTypes.shape({
             getUsers: PropTypes.func.isRequired,
             deleteUser: PropTypes.func.isRequired,
+            createUser: PropTypes.func.isRequired,
             changeUser: PropTypes.func.isRequired,
             getRoles: PropTypes.func.isRequired
         })
@@ -63,6 +66,12 @@ class App extends React.Component {
             this.props.form.handlers.onChangeRoles(user.userRoles);
         }
     }
+
+    onCreateUserRequest = () => {
+        this.setState({
+            dialog: CREATE_DIALOG
+        });
+    };
 
     onChangeUserRequest = (id) => {
         this.setState({
@@ -87,7 +96,11 @@ class App extends React.Component {
     onSaveUser = () => {
         const { props, state } = this;
         const { fields } = props.form;
-        props.actions.changeUser(state.selectedUserId, fields.userName, fields.userRoles);
+        if (state.selectedUserId) {
+            props.actions.changeUser(state.selectedUserId, fields.userName, fields.userRoles);
+        } else {
+            props.actions.createUser(fields.userName, fields.userRoles);
+        }
         this.resetState();
     };
 
@@ -131,10 +144,10 @@ class App extends React.Component {
         let result;
         switch (this.state.dialog) {
             case CREATE_DIALOG:
-                result = null;
+                result = this.renderEditDialog("Создание нового пользователя");
                 break;
             case CHANGE_DIALOG:
-                result = this.renderEditDialog();
+                result = this.renderEditDialog("Редактирование пользователя");
                 break;
             case DELETE_DIALOG:
                 result = this.renderDeleteDialog();
@@ -161,13 +174,13 @@ class App extends React.Component {
         );
     }
 
-    renderEditDialog() {
+    renderEditDialog(title) {
         const { props } = this;
         const user = this.getSelectedUser();
 
         return (
             <ModalDialog
-                title="Редактирование пользователя"
+                title={title}
                 actions={this.editDialogActions}
             >
                 <UserForm
@@ -183,7 +196,15 @@ class App extends React.Component {
     render() {
         return (
             <div className="app">
-                <h1>User list app</h1>
+                <div className="app__header">
+                    <h1 className="app__headerText">User list app</h1>
+                    <Button
+                        className="app__createButton"
+                        onClick={this.onCreateUserRequest}
+                    >
+                        Создать пользователя
+                    </Button>
+                </div>
 
                 <UserList
                     users={this.props.users}

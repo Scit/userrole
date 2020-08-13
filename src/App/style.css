@@ -2,3 +2,17 @@
     max-width: 1000px;
     margin: 0 auto;
 }
+
+.app__header {
+    display: flex;
+    align-items: center;
+}
+
+.app__headerText {
+    flex: 1;
+}
+
+.app__createButton {
+    background-color: forestgreen;
+    color: white;
+}

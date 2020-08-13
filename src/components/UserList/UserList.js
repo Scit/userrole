@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import rolesService from '../../services/rolesService';
 import Button from '../Button';
 import './style.css';
 
@@ -9,7 +8,7 @@ export default class UserList extends React.Component {
         users: PropTypes.arrayOf(PropTypes.shape({
             userId: PropTypes.number,
             userName: PropTypes.string,
-            roles: PropTypes.array
+            userRoles: PropTypes.array
         })),
         roles: PropTypes.arrayOf(PropTypes.shape({
             roleId: PropTypes.number,
@@ -41,7 +40,8 @@ export default class UserList extends React.Component {
     }
 
     renderRoles(roleIds) {
-        const roleNames = rolesService.getRoleNames(this.props.roles, roleIds);
+        const { props } = this;
+        const roleNames = props.roles.filter(role => roleIds.includes(role.roleId)).map(role => role.roleName);
 
         return (
             <div>
