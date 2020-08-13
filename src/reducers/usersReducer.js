@@ -10,7 +10,8 @@ export default (state = [], action) => {
             result = usersGetSuccess(state, action);
             break;
         case USER_DELETE_SUCCESS:
-            result = usersDeleteSuccess(state, action);
+            result = userDeleteSuccess(state, action);
+            break;
         default:
             result = state;
             break;
@@ -23,7 +24,9 @@ function usersGetSuccess(state, { payload }) {
     return payload;
 }
 
-function usersDeleteSuccess(state, { payload: id }) {
-    const indexOf = state.indexOf(user => user.userId === id);
-    return state.concat().splice(indexOf, 1);
+function userDeleteSuccess(state, { payload: id }) {
+    const indexOf = state.findIndex(user => user.userId === id);
+    const newUserList = state.concat();
+    newUserList.splice(indexOf, 1);
+    return newUserList;
 }

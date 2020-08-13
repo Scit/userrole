@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getUsers, deleteUser } from './actions/userActions';
-import { getRoles } from './actions/rolesActions';
+import { getUsers, deleteUser } from '../actions/userActions';
+import { getRoles } from '../actions/rolesActions';
 import {
     CHANGE_DIALOG,
     CREATE_DIALOG,
     DELETE_DIALOG
-} from './constants/dialogs';
+} from '../constants/dialogs';
 
-import UserList from './components/UserList';
-import ModalDialog from './components/ModalDialog';
-import './App.css';
+import UserList from '../components/UserList';
+import ModalDialog from '../components/ModalDialog';
+import './style.css';
 
 const actions = {
     getUsers,

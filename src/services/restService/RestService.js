@@ -10,11 +10,11 @@ export default class RestService {
     }
 
     async getUserList() {
-        return await Promise.resolve(this.users);
+        return await Promise.resolve(this.users.concat());
     }
 
     async getRoleList() {
-        return await Promise.resolve(this.roles);
+        return await Promise.resolve(this.roles.concat());
     }
 
     async createUser(userName, userRoles) {
