@@ -1,4 +1,9 @@
-.userForm__role--selected {
-    color: green;
-    font-weight: bold;
+.userForm__roles {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+.userForm__role {
+    margin: 3px 0;
 }

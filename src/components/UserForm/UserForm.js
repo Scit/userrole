@@ -34,17 +34,21 @@ export default class UserForm extends React.Component {
     renderRoles() {
         const { props } = this;
         return props.roleSource.map(role => {
-            const className = classnames({
-                'userForm__role--selected': props.userRoles.includes(role.roleId)
-            });
+            const selected = props.userRoles.includes(role.roleId);
 
             return (
                 <div
                     key={role.roleId}
-                    className={className}
-                    onClick={() => this.onToggleRole(role.roleId)}
+                    className="userForm__role"
                 >
-                    {role.roleName}
+                    <input
+                        type="checkbox"
+                        onChange={() => this.onToggleRole(role.roleId)}
+                        checked={selected}
+                        name={role.roleId}
+                    >
+                    </input>
+                    <label htmlFor={role.roleId}>{role.roleName}</label>
                 </div>
             );
         });
@@ -60,7 +64,7 @@ export default class UserForm extends React.Component {
                         onChange={e => props.handlers.onChangeUserName(e.currentTarget.value)}
                     />
                 </div>
-                <div>
+                <div className="userForm__roles">
                     {this.renderRoles()}
                 </div>
             </div>
