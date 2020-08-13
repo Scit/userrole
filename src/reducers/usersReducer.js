@@ -1,5 +1,6 @@
 import {
-    USERS_GET_SUCCESS
+    USERS_GET_SUCCESS,
+    USER_DELETE_SUCCESS
 } from '../constants/actions';
 
 export default (state = [], action) => {
@@ -8,6 +9,8 @@ export default (state = [], action) => {
         case USERS_GET_SUCCESS:
             result = usersGetSuccess(state, action);
             break;
+        case USER_DELETE_SUCCESS:
+            result = usersDeleteSuccess(state, action);
         default:
             result = state;
             break;
@@ -18,4 +21,9 @@ export default (state = [], action) => {
 
 function usersGetSuccess(state, { payload }) {
     return payload;
+}
+
+function usersDeleteSuccess(state, { payload: id }) {
+    const indexOf = state.indexOf(user => user.userId === id);
+    return state.concat().splice(indexOf, 1);
 }

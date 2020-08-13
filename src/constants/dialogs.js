@@ -1,0 +1,3 @@
+export const DELETE_DIALOG = 'DELETE_DIALOG';
+export const CREATE_DIALOG = 'CREATE_DIALOG';
+export const CHANGE_DIALOG = 'CHANGE_DIALOG';

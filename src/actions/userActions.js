@@ -1,7 +1,11 @@
 import {
     USERS_GET_REQUEST,
     USERS_GET_SUCCESS,
-    USERS_GET_ERROR
+    USERS_GET_ERROR,
+
+    USER_DELETE_REQUEST,
+    USER_DELETE_SUCCESS,
+    USER_DELETE_ERROR
 } from '../constants/actions';
 import restService from '../services/restService';
 
@@ -20,6 +24,27 @@ export function getUsers() {
         } catch {
             dispatch({
                 type: USERS_GET_ERROR
+            })
+        }
+
+    }
+}
+
+export function deleteUser(id) {
+    return async (dispatch) => {
+        dispatch({
+            type: USER_DELETE_REQUEST
+        });
+
+        try {
+            await restService.deleteUser(id);
+            dispatch({
+                type: USER_DELETE_SUCCESS,
+                payload: id
+            })
+        } catch {
+            dispatch({
+                type: USER_DELETE_ERROR
             })
         }
 
