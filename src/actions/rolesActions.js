@@ -1,25 +1,25 @@
 import {
-    USERS_GET_REQUEST,
-    USERS_GET_SUCCESS,
-    USERS_GET_ERROR
+    ROLES_GET_REQUEST,
+    ROLES_GET_SUCCESS,
+    ROLES_GET_ERROR
 } from '../constants/actions';
 import restService from '../services/restService';
 
-export function getUsers() {
+export function getRoles() {
     return async (dispatch) => {
         dispatch({
-            type: USERS_GET_REQUEST
+            type: ROLES_GET_REQUEST
         });
 
         try {
             const result = await restService.getUserList();
             dispatch({
-                type: USERS_GET_SUCCESS,
+                type: ROLES_GET_SUCCESS,
                 payload: result
             })
         } catch {
             dispatch({
-                type: USERS_GET_ERROR
+                type: ROLES_GET_ERROR
             })
         }
 
