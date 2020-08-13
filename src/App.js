@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getUsers } from './actions/userActions';
 import { getRoles } from './actions/rolesActions';
+
+import UserList from './components/UserList';
 import './App.css';
 
 const actions = {
@@ -26,10 +28,30 @@ class App extends React.Component {
         this.props.actions.getRoles();
     }
 
+    onChangeUser = (id) => {
+        console.log('onChangeUser', id)
+    };
+
+    onDeleteUser = (id) => {
+        console.log('onDeleteUser', id)
+    }
+
+    userListHandlers = {
+        onChange: this.onChangeUser,
+        onDelete: this.onDeleteUser
+    }
+
     render() {
-        console.log('props', this.props)
         return (
-            <div>hello</div>
+            <div className="app">
+                <h1>User list app</h1>
+
+                <UserList
+                    users={this.props.users}
+                    roles={this.props.roles}
+                    handlers={this.userListHandlers}
+                />
+            </div>
         );
     }
 }

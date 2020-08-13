@@ -12,7 +12,7 @@ export function getRoles() {
         });
 
         try {
-            const result = await restService.getUserList();
+            const result = await restService.getRoleList();
             dispatch({
                 type: ROLES_GET_SUCCESS,
                 payload: result
