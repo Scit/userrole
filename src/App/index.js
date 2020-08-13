@@ -1,2 +1,3 @@
 import App from './App';
-export default App;
+import formProvider from '../hocs/formProvider';
+export default formProvider(App);

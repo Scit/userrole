@@ -18,9 +18,9 @@ export default class RestService {
     }
 
     async createUser(userName, userRoles) {
-        const id = idProviderService.getNextId();
+        const userId = idProviderService.getNextId();
         const data = {
-            id,
+            userId,
             userName,
             userRoles
         };
@@ -29,10 +29,10 @@ export default class RestService {
         return await Promise.resolve(data);
     }
 
-    async alterUser(id, userName, userRoles) {
-        const index = this._getUserIndexById(id);
+    async changeUser(userId, userName, userRoles) {
+        const index = this._getUserIndexById(userId);
         const data = {
-            id,
+            userId,
             userName,
             userRoles
         };
@@ -40,13 +40,13 @@ export default class RestService {
         return await Promise.resolve(data);
     }
 
-    async deleteUser(id) {
-        const index = this._getUserIndexById(id);
+    async deleteUser(userId) {
+        const index = this._getUserIndexById(userId);
         this.users.splice(index, 1);
         return await Promise.resolve({});
     }
 
-    _getUserIndexById(id) {
-        return this.users.findIndex((user) => user.userId === id);
+    _getUserIndexById(userId) {
+        return this.users.findIndex((user) => user.userId === userId);
     }
 }

@@ -65,7 +65,7 @@ export default class UserList extends React.Component {
                         key={user.userId}
                     >
                         <div>{user.userName}</div>
-                        {this.renderRoles(user.roles)}
+                        {this.renderRoles(user.userRoles)}
                         {this.renderControls(user.userId)}
                     </div>
                 ), this)}

@@ -2,7 +2,7 @@ import React from 'react';
 
 const initialState = {
     userName: '',
-    roles: []
+    userRoles: []
 }
 
 export default (Component) => {
@@ -17,7 +17,7 @@ export default (Component) => {
 
         onChangeRoles = (value) => {
             this.setState({
-                roles: value
+                userRoles: value
             });
         };
 

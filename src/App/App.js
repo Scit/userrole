@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getUsers, deleteUser } from '../actions/userActions';
+import { getUsers, deleteUser, changeUser } from '../actions/userActions';
 import { getRoles } from '../actions/rolesActions';
 import {
     CHANGE_DIALOG,
@@ -12,11 +12,13 @@ import {
 
 import UserList from '../components/UserList';
 import ModalDialog from '../components/ModalDialog';
+import UserForm from '../components/UserForm';
 import './style.css';
 
 const actions = {
     getUsers,
     deleteUser,
+    changeUser,
     getRoles
 };
 
@@ -29,9 +31,20 @@ class App extends React.Component {
     static propTypes = {
         users: PropTypes.array,
         roles: PropTypes.array,
+        form: PropTypes.shape({
+            fields: PropTypes.shape({
+                roles: PropTypes.array,
+                userName: PropTypes.string
+            }),
+            handlers: PropTypes.shape({
+                onChangeRoles: PropTypes.func,
+                onChangeUserName: PropTypes.func
+            })
+        }),
         actions: PropTypes.shape({
             getUsers: PropTypes.func.isRequired,
             deleteUser: PropTypes.func.isRequired,
+            changeUser: PropTypes.func.isRequired,
             getRoles: PropTypes.func.isRequired
         })
     };
@@ -43,12 +56,22 @@ class App extends React.Component {
         this.props.actions.getRoles();
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if(prevState.dialog === null && this.state.dialog === CHANGE_DIALOG) {
+            const user = this.getSelectedUser();
+            this.props.form.handlers.onChangeUserName(user.userName);
+            this.props.form.handlers.onChangeRoles(user.userRoles);
+        }
+    }
+
     onChangeUserRequest = (id) => {
-        console.log('onChangeUser', id)
+        this.setState({
+            selectedUserId: id,
+            dialog: CHANGE_DIALOG
+        })
     };
 
     onDeleteUserRequest = (id) => {
-        console.log('onDeleteUser', id)
         this.setState({
             selectedUserId: id,
             dialog: DELETE_DIALOG
@@ -61,10 +84,28 @@ class App extends React.Component {
         this.resetState();
     };
 
+    onSaveUser = () => {
+        const { props, state } = this;
+        const { fields } = props.form;
+        props.actions.changeUser(state.selectedUserId, fields.userName, fields.userRoles);
+        this.resetState();
+    };
+
     userListHandlers = {
         onChange: this.onChangeUserRequest,
         onDelete: this.onDeleteUserRequest
     }
+
+    editDialogActions = [
+        {
+            label: 'Сохранить',
+            onClick: () => this.onSaveUser()
+        },
+        {
+            label: 'Отмена',
+            onClick: () => this.resetState()
+        }
+    ];
 
     deleteDialogActions = [
         {
@@ -77,6 +118,11 @@ class App extends React.Component {
         }
     ];
 
+    getSelectedUser() {
+        const { props, state } = this;
+        return props.users.find(user => user.userId === state.selectedUserId);
+    }
+
     resetState() {
         this.setState(initialState);
     }
@@ -88,7 +134,7 @@ class App extends React.Component {
                 result = null;
                 break;
             case CHANGE_DIALOG:
-                result = null;
+                result = this.renderEditDialog();
                 break;
             case DELETE_DIALOG:
                 result = this.renderDeleteDialog();
@@ -111,6 +157,25 @@ class App extends React.Component {
                 actions={this.deleteDialogActions}
             >
                 {user.userName}
+            </ModalDialog>
+        );
+    }
+
+    renderEditDialog() {
+        const { props } = this;
+        const user = this.getSelectedUser();
+
+        return (
+            <ModalDialog
+                title="Редактирование пользователя"
+                actions={this.editDialogActions}
+            >
+                <UserForm
+                    userName={props.form.fields.userName}
+                    userRoles={props.form.fields.userRoles}
+                    roleSource={props.roles}
+                    handlers={props.form.handlers}
+                />
             </ModalDialog>
         );
     }

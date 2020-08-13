@@ -5,7 +5,11 @@ import {
 
     USER_DELETE_REQUEST,
     USER_DELETE_SUCCESS,
-    USER_DELETE_ERROR
+    USER_DELETE_ERROR,
+
+    USER_CHANGE_REQUEST,
+    USER_CHANGE_SUCCESS,
+    USER_CHANGE_ERROR
 } from '../constants/actions';
 import restService from '../services/restService';
 
@@ -30,23 +34,46 @@ export function getUsers() {
     }
 }
 
-export function deleteUser(id) {
+export function deleteUser(userId) {
     return async (dispatch) => {
         dispatch({
             type: USER_DELETE_REQUEST
         });
 
         try {
-            await restService.deleteUser(id);
+            await restService.deleteUser(userId);
             dispatch({
                 type: USER_DELETE_SUCCESS,
-                payload: id
+                payload: userId
             })
         } catch {
             dispatch({
                 type: USER_DELETE_ERROR
             })
         }
+    }
+}
 
+export function changeUser(userId, userName, userRoles) {
+    return async (dispatch) => {
+        dispatch({
+            type: USER_CHANGE_REQUEST
+        });
+
+        try {
+            await restService.changeUser(userId, userName, userRoles);
+            dispatch({
+                type: USER_CHANGE_SUCCESS,
+                payload: {
+                    userId,
+                    userName,
+                    userRoles
+                }
+            })
+        } catch {
+            dispatch({
+                type: USER_CHANGE_ERROR
+            })
+        }
     }
 }

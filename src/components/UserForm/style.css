@@ -1,0 +1,4 @@
+.userForm__role--selected {
+    color: green;
+    font-weight: bold;
+}
