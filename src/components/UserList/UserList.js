@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import rolesService from '../../services/rolesService';
+import Button from '../Button';
 import './style.css';
 
 export default class UserList extends React.Component {
@@ -33,8 +34,8 @@ export default class UserList extends React.Component {
     renderControls(userId) {
         return (
             <div className="userList__controlsContainer">
-                <div className="userList__button" onClick={() => this.onChange(userId)}>Редактировать</div>
-                <div className="userList__button" onClick={() => this.onDelete(userId)}>Удалить</div>
+                <Button onClick={() => this.onChange(userId)}>Редактировать</Button>
+                <Button onClick={() => this.onDelete(userId)}>Удалить</Button>
             </div>
         );
     }

@@ -6,6 +6,7 @@ import { getUsers } from './actions/userActions';
 import { getRoles } from './actions/rolesActions';
 
 import UserList from './components/UserList';
+import ModalDialog from './components/ModalDialog';
 import './App.css';
 
 const actions = {
@@ -51,6 +52,13 @@ class App extends React.Component {
                     roles={this.props.roles}
                     handlers={this.userListHandlers}
                 />
+
+                <ModalDialog
+                    title="Вы хотите удалить выбранные элементы?"
+                    actions={[{ label: 'Удалить'}, { label: 'Отмена'}]}
+                >
+                    Hello
+                </ModalDialog>
             </div>
         );
     }

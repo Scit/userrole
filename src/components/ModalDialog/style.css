@@ -1,0 +1,45 @@
+.modalDialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modalDialog__frame {
+    position: absolute;
+    top: 30%;
+
+    display: inline-flex;
+    flex-direction: column;
+    min-width: 30vw;
+    min-height: 200px;
+    padding: 10px;
+    box-shadow: 10px 10px 5px gray;
+    border-radius: 10px;
+
+    background-color: aliceblue;
+}
+
+.modalDialog__title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0 20px;
+}
+
+.modalDialog__content {
+    flex: 1;
+}
+
+.modalDialog__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+
+}

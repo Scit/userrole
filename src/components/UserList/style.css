@@ -11,17 +11,3 @@
 .userList__controlsContainer {
     display: flex;
 }
-
-.userList__button {
-    margin: 5px 10px;
-    padding: 10px;
-    background-color: coral;
-    border-radius: 5px;
-
-    cursor: pointer;
-    user-select: none;
-}
-
-.userList__button:active {
-    background-color: chocolate;
-}
