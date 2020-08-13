@@ -40,7 +40,8 @@ class App extends React.Component {
             }),
             handlers: PropTypes.shape({
                 onChangeRoles: PropTypes.func,
-                onChangeUserName: PropTypes.func
+                onChangeUserName: PropTypes.func,
+                onReset: PropTypes.func
             })
         }),
         actions: PropTypes.shape({
@@ -138,6 +139,7 @@ class App extends React.Component {
 
     resetState() {
         this.setState(initialState);
+        this.props.form.handlers.onReset();
     }
 
     renderDialogs() {
@@ -176,7 +178,6 @@ class App extends React.Component {
 
     renderEditDialog(title) {
         const { props } = this;
-        const user = this.getSelectedUser();
 
         return (
             <ModalDialog

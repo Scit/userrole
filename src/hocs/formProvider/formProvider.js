@@ -21,9 +21,14 @@ export default (Component) => {
             });
         };
 
+        onReset = () => {
+            this.setState(initialState);
+        };
+
         handlers = {
             onChangeUserName: this.onChangeUserName,
-            onChangeRoles: this.onChangeRoles
+            onChangeRoles: this.onChangeRoles,
+            onReset: this.onReset
         }
 
         render() {
